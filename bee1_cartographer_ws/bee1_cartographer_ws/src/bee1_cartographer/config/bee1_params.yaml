@@ -1,0 +1,102 @@
+# Beemobs Bee1 System Parameters
+# Global configuration for all nodes
+
+bee1_cartographer:
+  ros__parameters:
+    
+    # Vehicle Parameters
+    vehicle:
+      max_speed: 15.0  # m/s (55 km/h)
+      max_acceleration: 2.5  # m/s²
+      max_deceleration: 2.5  # m/s²
+      wheelbase: 1.86  # meters
+      track_width: 1.06  # meters
+      vehicle_length: 2.74  # meters
+      vehicle_width: 1.06  # meters
+      vehicle_height: 1.785  # meters
+      vehicle_mass: 835.0  # kg
+      max_steering_angle: 0.5  # radians (~28.6 degrees)
+      
+    # Safety Parameters
+    safety:
+      emergency_stop_deceleration: 5.0  # m/s²
+      collision_avoidance_distance: 3.0  # meters
+      max_lateral_acceleration: 4.0  # m/s²
+      speed_limit_buffer: 0.9  # 90% of max speed
+      
+    # Sensor Positions (relative to base_link)
+    sensors:
+      lidar:
+        x: -0.177
+        y: 0.0
+        z: 0.620
+        frame_id: "velodyne_link"
+        
+      gps:
+        x: 1.440
+        y: 0.0
+        z: 1.390
+        frame_id: "gps_link"
+        
+      imu:
+        x: 0.0
+        y: 0.0
+        z: 0.5
+        frame_id: "imu_link"
+        
+    # Mission Parameters
+    mission:
+      waypoint_tolerance: 0.5  # meters
+      heading_tolerance: 0.25  # radians (~14 degrees)
+      default_speed: 10.0  # m/s
+      turn_speed: 5.0  # m/s
+      auto_start_delay: 5.0  # seconds
+      
+    # Control Parameters
+    control:
+      throttle_max: 1.0
+      brake_max: 1.0
+      steering_rate_limit: 1.0  # rad/s
+      control_frequency: 50.0  # Hz
+      
+    # Network Parameters
+    network:
+      lidar_ip: "192.168.1.201"
+      lidar_port: 2368
+      ros_domain_id: 42
+      
+    # Coordinate System
+    coordinates:
+      datum_latitude: 40.7903314
+      datum_longitude: 29.50896659
+      datum_altitude: 0.0
+      utm_zone: "35T"
+
+geojson_parser:
+  ros__parameters:
+    use_sim_time: false
+    publish_rate: 1.0  # Hz
+    
+mission_executor:
+  ros__parameters:
+    use_sim_time: false
+    auto_start: false
+    status_publish_rate: 1.0  # Hz
+    navigation_timeout: 300.0  # seconds
+    
+vehicle_controller:
+  ros__parameters:
+    use_sim_time: false
+    max_speed: 15.0
+    max_steering_angle: 0.5
+    max_acceleration: 2.5
+    max_deceleration: 2.5
+    control_frequency: 50.0
+    
+hardware_interface:
+  ros__parameters:
+    use_sim_time: false
+    hardware_frequency: 100.0  # Hz
+    gps_port: "/dev/gps"
+    imu_port: "/dev/imu"
+    can_interface: "can0"

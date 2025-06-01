@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  bee1_cartographer:
+    build: .
+    container_name: bee1_cartographer
+    privileged: true
+    network_mode: host
+    environment:
+      - DISPLAY=${DISPLAY}
+      - ROS_DOMAIN_ID=42
+      - RMW_IMPLEMENTATION=rmw_cyclonedx_cpp
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ./maps:/workspace/maps:rw
+      - ./logs:/workspace/logs:rw
+      - /dev:/dev:rw
+    devices:
+      - /dev/ttyUSB0:/dev/gps  # GPS device
+      - /dev/ttyUSB1:/dev/imu  # IMU device
+    working_dir: /workspace
+    command: ros2 launch bee1_cartographer bee1_bringup.launch.py
+    
+  bee1_mapping:
+    extends: bee1_cartographer
+    container_name: bee1_mapping
+    command: ros2 launch bee1_cartographer bee1_mapping.launch.py
+    
+  bee1_navigation:
+    extends: bee1_cartographer
+    container_name: bee1_navigation
+    command: ros2 launch bee1_cartographer bee1_navigation.launch.py map:=/workspace/maps/track_map.yaml
+    
+  rviz:
+    extends: bee1_cartographer
+    container_name: bee1_rviz
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    command: ros2 run rviz2 rviz2 -d /workspace/src/bee1_cartographer/config/rviz/bee1_navigation.rviz

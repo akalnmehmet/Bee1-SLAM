@@ -1,0 +1,24 @@
+# Beemobs Bee1 Hardware Device Rules
+# Copy to /etc/udev/rules.d/99-bee1-devices.rules
+# Reload with: sudo udevadm control --reload-rules && sudo udevadm trigger
+
+# Velodyne VLP16 LiDAR - Ethernet Interface
+SUBSYSTEM=="net", ATTRS{address}=="60:76:88:*", NAME="velodyne"
+
+# UBLOX GPS Receiver
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1546", ATTRS{idProduct}=="01a*", SYMLINK+="gps", GROUP="dialout", MODE="0666"
+
+# XSENS MTi-680-DK IMU
+SUBSYSTEM=="tty", ATTRS{idVendor}=="2639", ATTRS{idProduct}=="*", SYMLINK+="imu", GROUP="dialout", MODE="0666"
+
+# Bee1 Vehicle CAN Interface
+SUBSYSTEM=="net", KERNEL=="can*", ACTION=="add", ATTR{device/vendor}=="0x*", ATTR{device/device}=="0x*", NAME="can_bee1"
+
+# USB Cameras (if any)
+SUBSYSTEM=="video4linux", ATTRS{idVendor}=="*", ATTRS{idProduct}=="*", SYMLINK+="camera%n", GROUP="video", MODE="0666"
+
+# Emergency Stop Button
+SUBSYSTEM=="input", ATTRS{name}=="Emergency Stop", SYMLINK+="emergency_stop", GROUP="input", MODE="0666"
+
+# Joystick/Controller
+SUBSYSTEM=="input", ATTRS{name}=="*Controller*", SYMLINK+="controller", GROUP="input", MODE="0666"

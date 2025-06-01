@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="bee1">
+
+  <!-- Vehicle Parameters -->
+  <xacro:property name="wheelbase" value="1.86"/>
+  <xacro:property name="track_width" value="1.06"/>
+  <xacro:property name="vehicle_length" value="2.74"/>
+  <xacro:property name="vehicle_width" value="1.06"/>
+  <xacro:property name="vehicle_height" value="1.785"/>
+  <xacro:property name="vehicle_mass" value="835"/>
+
+  <!-- Include sensors -->
+  <xacro:include filename="$(find bee1_cartographer)/urdf/bee1_sensors.urdf.xacro"/>
+
+  <!-- Base Link -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0.5" rpy="0 0 0"/>
+      <geometry>
+        <box size="${vehicle_length} ${vehicle_width} ${vehicle_height}"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0.0 0.0 1.0 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.5" rpy="0 0 0"/>
+      <geometry>
+        <box size="${vehicle_length} ${vehicle_width} ${vehicle_height}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0.5" rpy="0 0 0"/>
+      <mass value="${vehicle_mass}"/>
+      <inertia ixx="100.0" ixy="0.0" ixz="0.0"
+               iyy="100.0" iyz="0.0"
+               izz="100.0"/>
+    </inertial>
+  </link>
+
+  <!-- Base Footprint -->
+  <link name="base_footprint"/>
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0.2" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Front Axle -->
+  <link name="front_axle">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="${track_width}"/>
+      </geometry>
+      <material name="black">
+        <color rgba="0.0 0.0 0.0 1.0"/>
+      </material>
+    </visual>
+  </link>
+  <joint name="front_axle_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="front_axle"/>
+    <origin xyz="${wheelbase/2} 0 0" rpy="0 1.5708 0"/>
+  </joint>
+
+  <!-- Rear Axle -->
+  <link name="rear_axle">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="${track_width}"/>
+      </geometry>
+      <material name="black">
+        <color rgba="0.0 0.0 0.0 1.0"/>
+      </material>
+    </visual>
+  </link>
+  <joint name="rear_axle_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="rear_axle"/>
+    <origin xyz="${-wheelbase/2} 0 0" rpy="0 1.5708 0"/>
+  </joint>
+
+  <!-- Wheels -->
+  <xacro:macro name="wheel" params="name x y">
+    <link name="${name}_wheel">
+      <visual>
+        <geometry>
+          <cylinder radius="0.3" length="0.2"/>
+        </geometry>
+        <material name="black">
+          <color rgba="0.0 0.0 0.0 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <cylinder radius="0.3" length="0.2"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="20"/>
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+                 iyy="1.0" iyz="0.0"
+                 izz="1.0"/>
+      </inertial>
+    </link>
+    <joint name="${name}_wheel_joint" type="continuous">
+      <parent link="base_link"/>
+      <child link="${name}_wheel"/>
+      <origin xyz="${x} ${y} 0" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:wheel name="front_left" x="${wheelbase/2}" y="${track_width/2}"/>
+  <xacro:wheel name="front_right" x="${wheelbase/2}" y="${-track_width/2}"/>
+  <xacro:wheel name="rear_left" x="${-wheelbase/2}" y="${track_width/2}"/>
+  <xacro:wheel name="rear_right" x="${-wheelbase/2}" y="${-track_width/2}"/>
+
+  <!-- Sensors -->
+  <xacro:vlp16_sensor parent="base_link" name="velodyne" topic="/velodyne_points">
+    <origin xyz="-0.177 0 0.620" rpy="0 0 0"/>
+  </xacro:vlp16_sensor>
+
+  <xacro:gps_sensor parent="base_link" name="gps">
+    <origin xyz="1.440 0 1.390" rpy="0 0 0"/>
+  </xacro:gps_sensor>
+
+  <xacro:imu_sensor parent="base_link" name="imu">
+    <origin xyz="0 0 0.5" rpy="0 0 0"/>
+  </xacro:imu_sensor>
+
+</robot>

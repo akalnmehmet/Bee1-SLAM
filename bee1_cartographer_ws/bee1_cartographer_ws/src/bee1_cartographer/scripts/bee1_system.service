@@ -1,0 +1,26 @@
+# Systemd service file for Beemobs Bee1 autonomous vehicle
+# Copy to /etc/systemd/system/bee1_system.service
+# Enable with: sudo systemctl enable bee1_system.service
+
+[Unit]
+Description=Beemobs Bee1 Autonomous Vehicle System
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=exec
+User=bee1
+Group=bee1
+WorkingDirectory=/home/bee1/bee1_cartographer_ws
+Environment="ROS_DOMAIN_ID=42"
+Environment="RMW_IMPLEMENTATION=rmw_cyclonedx_cpp"
+ExecStartPre=/bin/bash -c 'source /opt/ros/humble/setup.bash && source install/setup.bash'
+ExecStart=/bin/bash -c 'source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 launch bee1_cartographer bee1_bringup.launch.py'
+ExecStop=/bin/kill -TERM $MAINPID
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
