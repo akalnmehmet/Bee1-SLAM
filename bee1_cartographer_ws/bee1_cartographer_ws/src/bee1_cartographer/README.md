@@ -32,9 +32,6 @@
 - ✅ **Real-time Monitoring**: Comprehensive diagnostics
 - ✅ **Production Ready**: No placeholders, complete system
 
-## 📚 Documentation
-- [Installation Guide](INSTALLATION_AND_USAGE.md)
-
 ## 🚀 Quick Start
 
 ### 1. Automated Setup
@@ -216,9 +213,7 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/your-repo/bee1_cartographer/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/your-repo/bee1_cartographer/discussions)
-- **Email**: support@beemobs.com
+- **Email**: mehmetakalin660@gmail.com
 
 ---
 
