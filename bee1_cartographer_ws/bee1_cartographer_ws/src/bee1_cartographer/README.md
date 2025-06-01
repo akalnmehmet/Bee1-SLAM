@@ -422,9 +422,3 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 - ✅ **Docker Support**: Multi-architecture builds
 - 🔄 **Performance Optimization**: Ongoing improvements
 - 📋 **Documentation**: Continuous updates
-
-## ⭐ Star History
-
-If this project helps you, please consider giving it a star! ⭐
-
-[![Star History Chart](https://api.star-history.com/svg?repos=akalnmehmet/Bee1-SLAM&type=Date)](https://star-history.com/#akalnmehmet/Bee1-SLAM&Date)
