@@ -32,6 +32,9 @@
 - ✅ **Real-time Monitoring**: Comprehensive diagnostics
 - ✅ **Production Ready**: No placeholders, complete system
 
+## 📚 Documentation
+- [Installation Guide](INSTALLATION_AND_USAGE.md)
+
 ## 🚀 Quick Start
 
 ### 1. Automated Setup

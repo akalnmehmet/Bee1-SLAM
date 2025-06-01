@@ -78,12 +78,82 @@ source ~/.bashrc
 
 ## 2. Paket Kurulumu
 
-### 2.1 Dosya Yapısı (Oluşturulan)
+### 2.1 Hızlı Kurulum (Otomatik)
+
+```bash
+# Kurulum scriptini indir ve çalıştır
+wget https://raw.githubusercontent.com/akalnmehmet/Bee1-SLAM/main/scripts/setup_bee1.sh
+chmod +x setup_bee1.sh
+./setup_bee1.sh
+```
+
+### 2.2 Manuel Kurulum
+
+```bash
+# Workspace oluştur
+mkdir -p ~/bee1_cartographer_ws/src
+cd ~/bee1_cartographer_ws/src
+
+# GitHub'dan repoyu clone et
+git clone https://github.com/akalnmehmet/Bee1-SLAM.git bee1_cartographer
+
+# Workspace'e geri dön
+cd ~/bee1_cartographer_ws
+
+# rosdep başlat (ilk kez çalıştırıyorsanız)
+sudo rosdep init
+rosdep update
+
+# Bağımlılıkları yükle
+rosdep install --from-paths src --ignore-src -r -y
+
+# Environment source
+echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+
+# Paketi derle
+colcon build --symlink-install
+
+# Workspace setup
+source install/setup.bash
+echo "source ~/bee1_cartographer_ws/install/setup.bash" >> ~/.bashrc
+```
+
+### 2.3 Git Clone Seçenekleri
+
+#### HTTPS ile Clone
+
+```bash
+# Public repo için
+git clone https://github.com/akalnmehmet/Bee1-SLAM.git bee1_cartographer
+
+# Private repo için (GitHub token gerekli)
+git clone https://GITHUB_TOKEN@github.com/akalnmehmet/Bee1-SLAM.git bee1_cartographer
+```
+
+#### SSH ile Clone
+
+```bash
+# SSH key kurulumu gerekli
+git clone git@github.com:akalnmehmet/Bee1-SLAM.git bee1_cartographer
+```
+
+#### Belirli Branch Clone
+
+```bash
+# Development branch
+git clone -b development https://github.com/akalnmehmet/Bee1-SLAM.git bee1_cartographer
+
+# Release tag
+git clone -b v1.0.0 https://github.com/akalnmehmet/Bee1-SLAM.git bee1_cartographer
+```
+
+### 2.4 Dosya Yapısı (Oluşturulan)
 
 ```
 ~/bee1_cartographer_ws/
 ├── src/
-│   └── bee1_cartographer/
+│   └── bee1_cartographer/ (Bee1-SLAM repository)
 │       ├── package.xml
 │       ├── CMakeLists.txt
 │       ├── README.md
@@ -160,7 +230,7 @@ source ~/.bashrc
 └── maps/ (kullanıcı haritaları)
 ```
 
-### 2.2 Derleme
+### 2.5 Derleme
 
 ```bash
 cd ~/bee1_cartographer_ws
@@ -564,6 +634,10 @@ ros2 topic echo /vehicle/manual_status
 sudo apt update
 sudo apt upgrade ros-humble-*
 
+# Repository güncelle
+cd ~/bee1_cartographer_ws/src/bee1_cartographer
+git pull origin main
+
 # Workspace yeniden derle
 cd ~/bee1_cartographer_ws
 colcon build --symlink-install
@@ -589,6 +663,9 @@ cp -r ~/bee1_cartographer_ws/src/bee1_cartographer/scripts ~/bee1_scripts_backup
 **S: Workspace nerede oluşturulmalı?**
 C: `~/bee1_cartographer_ws` (kendi home directory'nizde)
 
+**S: Repository nasıl indirilir?**
+C: `git clone https://github.com/akalnmehmet/Bee1-SLAM.git bee1_cartographer`
+
 **S: Hangi launch dosyası ne için kullanılır?**
 C: 
 - `bee1_bringup.launch.py`: Temel sistem
@@ -606,3 +683,40 @@ C: GeoJSON parser'ın waypoint'leri doğru yüklediğinden emin olun.
 
 **S: Docker kullanmalı mıyım?**
 C: Geliştirme için local, production için Docker önerilir.
+
+**S: Güncelleme nasıl yapılır?**
+C: `cd ~/bee1_cartographer_ws/src/bee1_cartographer && git pull origin main`
+
+**S: Repository hangi branch'i kullanmalı?**
+C: Ana geliştirme için `main` branch, test için `development` branch
+
+---
+
+## 📚 Documentation
+
+- [GitHub Repository](https://github.com/akalnmehmet/Bee1-SLAM)
+- [Installation Guide](https://github.com/akalnmehmet/Bee1-SLAM/blob/main/INSTALLATION_AND_USAGE.md)
+- [API Reference](https://github.com/akalnmehmet/Bee1-SLAM/blob/main/docs/api.md)
+- [Configuration Guide](https://github.com/akalnmehmet/Bee1-SLAM/blob/main/docs/configuration.md)
+- [Hardware Setup](https://github.com/akalnmehmet/Bee1-SLAM/blob/main/docs/hardware.md)
+
+## 🤝 Contributing
+
+1. Fork the repository: [https://github.com/akalnmehmet/Bee1-SLAM/fork](https://github.com/akalnmehmet/Bee1-SLAM/fork)
+2. Create feature branch: `git checkout -b feature/new-feature`
+3. Commit changes: `git commit -am 'Add new feature'`
+4. Push to branch: `git push origin feature/new-feature`
+5. Submit pull request: [https://github.com/akalnmehmet/Bee1-SLAM/pulls](https://github.com/akalnmehmet/Bee1-SLAM/pulls)
+
+## 📞 Support
+
+- **Issues**: [GitHub Issues](https://github.com/akalnmehmet/Bee1-SLAM/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/akalnmehmet/Bee1-SLAM/discussions)
+- **Author**: Mehmet AKALIN
+- **Email**: mehmet@akalnmehmet.com
+
+---
+
+**🚗 Drive Autonomous, Drive Safe!** 
+
+*Built with ❤️ for autonomous racing by Mehmet AKALIN*
