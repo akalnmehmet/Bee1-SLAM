@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="3">
-  <name>bee1_cartographer</name>  <!-- ✅ DÜZELTME: <n> değil <name> -->
+  <name>bee1_cartographer</name>
   <version>1.0.0</version>
   <description>Beemobs Bee1 Cartographer SLAM and Navigation System</description>
   <maintainer email="developer@beemobs.com">Beemobs Developer</maintainer>
