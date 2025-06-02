@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <package format="3">
-  <n>bee1_cartographer</n>
+  <name>bee1_cartographer</name>  <!-- ✅ DÜZELTME: <n> değil <name> -->
   <version>1.0.0</version>
   <description>Beemobs Bee1 Cartographer SLAM and Navigation System</description>
   <maintainer email="developer@beemobs.com">Beemobs Developer</maintainer>
   <license>Apache-2.0</license>
-
+  
   <buildtool_depend>ament_cmake</buildtool_depend>
-
+  
   <!-- Core ROS2 dependencies -->
   <depend>rclcpp</depend>
   <depend>rclcpp_action</depend>
@@ -20,14 +20,14 @@
   <depend>tf2_ros</depend>
   <depend>tf2_geometry_msgs</depend>
   <depend>builtin_interfaces</depend>
-
+  
   <!-- Navigation and SLAM -->
   <depend>cartographer_ros</depend>
   <depend>navigation2</depend>
   <depend>nav2_msgs</depend>
   <depend>nav2_bringup</depend>
   <depend>robot_localization</depend>
-
+  
   <!-- Hardware drivers -->
   <depend>velodyne</depend>
   <depend>velodyne_driver</depend>
@@ -35,20 +35,20 @@
   <depend>pointcloud_to_laserscan</depend>
   <depend>ublox_msgs</depend>
   <depend>ublox_gps</depend>
-
+  
   <!-- Robot description -->
   <depend>xacro</depend>
   <depend>joint_state_publisher</depend>
   <depend>robot_state_publisher</depend>
-
+  
   <!-- Visualization -->
   <depend>rviz2</depend>
-
+  
   <!-- Testing dependencies -->
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
   <test_depend>ament_cmake_pytest</test_depend>
-
+  
   <export>
     <build_type>ament_cmake</build_type>
   </export>
